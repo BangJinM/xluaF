@@ -22,7 +22,7 @@ function LoginViewMediator:handleNotification(notification)
 end
 
 function LoginViewMediator:OpenLayer( )
-    require("games.ui.view.LoginViewLayer"):init()
+    require("games.ui.view.LoginViewLayer").new()
 end
 
 return LoginViewMediator

@@ -34,6 +34,7 @@ namespace XLua
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.Ray>(translator.PushUnityEngineRay, translator.Get, translator.UpdateUnityEngineRay);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.Bounds>(translator.PushUnityEngineBounds, translator.Get, translator.UpdateUnityEngineBounds);
 				translator.RegisterPushAndGetAndUpdate<UnityEngine.Ray2D>(translator.PushUnityEngineRay2D, translator.Get, translator.UpdateUnityEngineRay2D);
+				translator.RegisterPushAndGetAndUpdate<Networks.NetWorkState>(translator.PushNetworksNetWorkState, translator.Get, translator.UpdateNetworksNetWorkState);
 			
 			}
         }
@@ -570,6 +571,90 @@ namespace XLua
             }
         }
         
+        int NetworksNetWorkState_TypeID = -1;
+		int NetworksNetWorkState_EnumRef = -1;
+        
+        public void PushNetworksNetWorkState(RealStatePtr L, Networks.NetWorkState val)
+        {
+            if (NetworksNetWorkState_TypeID == -1)
+            {
+			    bool is_first;
+                NetworksNetWorkState_TypeID = getTypeId(L, typeof(Networks.NetWorkState), out is_first);
+				
+				if (NetworksNetWorkState_EnumRef == -1)
+				{
+				    Utils.LoadCSTable(L, typeof(Networks.NetWorkState));
+				    NetworksNetWorkState_EnumRef = LuaAPI.luaL_ref(L, LuaIndexes.LUA_REGISTRYINDEX);
+				}
+				
+            }
+			
+			if (LuaAPI.xlua_tryget_cachedud(L, (int)val, NetworksNetWorkState_EnumRef) == 1)
+            {
+			    return;
+			}
+			
+            IntPtr buff = LuaAPI.xlua_pushstruct(L, 4, NetworksNetWorkState_TypeID);
+            if (!CopyByValue.Pack(buff, 0, (int)val))
+            {
+                throw new Exception("pack fail fail for Networks.NetWorkState ,value="+val);
+            }
+			
+			LuaAPI.lua_getref(L, NetworksNetWorkState_EnumRef);
+			LuaAPI.lua_pushvalue(L, -2);
+			LuaAPI.xlua_rawseti(L, -2, (int)val);
+			LuaAPI.lua_pop(L, 1);
+			
+        }
+		
+        public void Get(RealStatePtr L, int index, out Networks.NetWorkState val)
+        {
+		    LuaTypes type = LuaAPI.lua_type(L, index);
+            if (type == LuaTypes.LUA_TUSERDATA )
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != NetworksNetWorkState_TypeID)
+				{
+				    throw new Exception("invalid userdata for Networks.NetWorkState");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+				int e;
+                if (!CopyByValue.UnPack(buff, 0, out e))
+                {
+                    throw new Exception("unpack fail for Networks.NetWorkState");
+                }
+				val = (Networks.NetWorkState)e;
+                
+            }
+            else
+            {
+                val = (Networks.NetWorkState)objectCasters.GetCaster(typeof(Networks.NetWorkState))(L, index, null);
+            }
+        }
+		
+        public void UpdateNetworksNetWorkState(RealStatePtr L, int index, Networks.NetWorkState val)
+        {
+		    
+            if (LuaAPI.lua_type(L, index) == LuaTypes.LUA_TUSERDATA)
+            {
+			    if (LuaAPI.xlua_gettypeid(L, index) != NetworksNetWorkState_TypeID)
+				{
+				    throw new Exception("invalid userdata for Networks.NetWorkState");
+				}
+				
+                IntPtr buff = LuaAPI.lua_touserdata(L, index);
+                if (!CopyByValue.Pack(buff, 0,  (int)val))
+                {
+                    throw new Exception("pack fail for Networks.NetWorkState ,value="+val);
+                }
+            }
+			
+            else
+            {
+                throw new Exception("try to update a data with lua type:" + LuaAPI.lua_type(L, index));
+            }
+        }
+        
         
 		// table cast optimze
 		
@@ -629,6 +714,12 @@ namespace XLua
 				translator.PushUnityEngineRay2D(L, array[index]);
 				return true;
 			}
+			else if (type == typeof(Networks.NetWorkState[]))
+			{
+			    Networks.NetWorkState[] array = obj as Networks.NetWorkState[];
+				translator.PushNetworksNetWorkState(L, array[index]);
+				return true;
+			}
             return false;
 		}
 		
@@ -680,6 +771,12 @@ namespace XLua
 			else if (type == typeof(UnityEngine.Ray2D[]))
 			{
 			    UnityEngine.Ray2D[] array = obj as UnityEngine.Ray2D[];
+				translator.Get(L, obj_idx, out array[array_idx]);
+				return true;
+			}
+			else if (type == typeof(Networks.NetWorkState[]))
+			{
+			    Networks.NetWorkState[] array = obj as Networks.NetWorkState[];
 				translator.Get(L, obj_idx, out array[array_idx]);
 				return true;
 			}
