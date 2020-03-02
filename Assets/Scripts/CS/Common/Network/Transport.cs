@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using XLua;
+
 namespace Networks
 {
     public enum TransportState
@@ -21,58 +22,65 @@ namespace Networks
         public const int HeadLength = 4;
 
         private Socket socket;
-        private Action<byte[]> messageProcesser;
+        private Action<SocketModel> messageProcesser;
 
         //Used for get message
         private StateObject stateObject = new StateObject();
         private TransportState transportState;
         private IAsyncResult asyncReceive;
         private IAsyncResult asyncSend;
-        private bool onSending = false;
-        private byte[] headBuffer = new byte[4];
-        private byte[] buffer;
-        private int bufferOffset = 0;
-        private int pkgLength = 0;
         internal Action onDisconnect = null;
+        private  int len = 0;
 
-        //private TransportQueue<byte[]> _receiveQueue = new TransportQueue<byte[]>();
-        private System.Object _lock = new System.Object();
-
-        public Transport(Socket socket, Action<byte[]> processer)
+        public Transport(Socket socket, Action<SocketModel> action, Action dispose)
         {
             this.socket = socket;
-            this.messageProcesser = processer;
+            messageProcesser = action;
+            onDisconnect = dispose;
             transportState = TransportState.readHead;
         }
 
 
-        public void send(byte[] buffer)
+        public void send(SocketModel socketModel)
         {
             if (this.transportState != TransportState.closed)
             {
-                this.asyncSend = socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(sendCallback), socket);
+                byte[] msg = SocketUtils.Serial(socketModel);
+                //消息体结构：消息体长度+消息体
+                byte[] data = new byte[4 + msg.Length];
+                SocketUtils.IntToBytes(msg.Length).CopyTo(data, 0);
+                msg.CopyTo(data, 4);
+                if (socket != null && socket.Connected)
+                    this.asyncSend = socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(sendCallback), socket);
+                else
+                    onDisconnect();
 
-                this.onSending = true;
             }
         }
 
         private void sendCallback(IAsyncResult asyncSend)
         {
-            //UnityEngine.Debug.Log("sendCallback " + this.transportState);
-            if (this.transportState == TransportState.closed) return;
-            socket.EndSend(asyncSend);
-            this.onSending = false;
+            try
+            {
+                if (this.transportState == TransportState.closed) return;
+                socket.EndSend(asyncSend);
+            }
+                catch (System.Net.Sockets.SocketException)
+            {
+                close();
+            }
         }
 
         public void receive()
         {
-            //Console.WriteLine("receive state : {0}, {1}", this.transportState, socket.Available);
             this.asyncReceive = socket.BeginReceive(stateObject.buffer, 0, stateObject.buffer.Length, SocketFlags.None, new AsyncCallback(endReceive), stateObject);
         }
 
         internal void close()
         {
             this.transportState = TransportState.closed;
+            if (this.onDisconnect != null)
+                this.onDisconnect();
         }
 
         private void endReceive(IAsyncResult asyncReceive)
@@ -94,14 +102,13 @@ namespace Networks
                 }
                 else
                 {
-                    if (this.onDisconnect != null) this.onDisconnect();
+                    close();
                 }
 
             }
             catch (System.Net.Sockets.SocketException)
             {
-                if (this.onDisconnect != null)
-                    this.onDisconnect();
+                close();
             }
         }
 
@@ -113,84 +120,27 @@ namespace Networks
             }
             else if (this.transportState == TransportState.readBody)
             {
-                readBody(bytes, offset, limit);
+                readBoby(bytes, offset, limit);
             }
         }
 
-        private bool readHead(byte[] bytes, int offset, int limit)
-        {
-            int length = limit - offset;
-            int headNum = HeadLength - bufferOffset;
-
-            if (length >= headNum)
-            {
-                //Write head buffer
-                writeBytes(bytes, offset, headNum, bufferOffset, headBuffer);
-                //Get package length
-                pkgLength = (headBuffer[1] << 16) + (headBuffer[2] << 8) + headBuffer[3];
-
-                //Init message buffer
-                buffer = new byte[HeadLength + pkgLength];
-                writeBytes(headBuffer, 0, HeadLength, buffer);
-                offset += headNum;
-                bufferOffset = HeadLength;
-                this.transportState = TransportState.readBody;
-
-                if (offset <= limit) processBytes(bytes, offset, limit);
-                return true;
-            }
-            else
-            {
-                writeBytes(bytes, offset, length, bufferOffset, headBuffer);
-                bufferOffset += length;
-                return false;
-            }
+        public void readHead(byte[] bytes, int offset, int limit) {
+            byte[] lenByte = new byte[HeadLength];
+            System.Array.Copy(bytes, lenByte, HeadLength);
+            len = SocketUtils.BytesToInt(lenByte, 0);
+            this.transportState = TransportState.readBody;
+            if (len + HeadLength <= limit)
+                readBoby(bytes, offset, limit);
         }
 
-        private void readBody(byte[] bytes, int offset, int limit)
-        {
-            int length = pkgLength + HeadLength - bufferOffset;
-            if ((offset + length) <= limit)
-            {
-                writeBytes(bytes, offset, length, bufferOffset, buffer);
-                offset += length;
-
-                //Invoke the protocol api to handle the message
-                this.messageProcesser.Invoke(buffer);
-                this.bufferOffset = 0;
-                this.pkgLength = 0;
-
-                if (this.transportState != TransportState.closed)
-                    this.transportState = TransportState.readHead;
-                if (offset < limit)
-                    processBytes(bytes, offset, limit);
-            }
-            else
-            {
-                writeBytes(bytes, offset, limit - offset, bufferOffset, buffer);
-                bufferOffset += limit - offset;
-                this.transportState = TransportState.readBody;
-            }
-        }
-
-        private void writeBytes(byte[] source, int start, int length, byte[] target)
-        {
-            writeBytes(source, start, length, 0, target);
-        }
-
-        private void writeBytes(byte[] source, int start, int length, int offset, byte[] target)
-        {
-            for (int i = 0; i < length; i++)
-            {
-                target[offset + i] = source[start + i];
-            }
-        }
-
-        private void print(byte[] bytes, int offset, int length)
-        {
-            for (int i = offset; i < length; i++)
-                Console.Write(Convert.ToString(bytes[i], 16) + " ");
-            Console.WriteLine();
+        public void readBoby(byte[] bytes, int offset, int limit) {
+            byte[] msgByte = new byte[len];
+            System.Array.ConstrainedCopy(bytes, HeadLength, msgByte, 0, len);
+            len = 0;
+            SocketModel message = SocketUtils.DeSerial(msgByte);
+            this.transportState = TransportState.readHead;
+            if (messageProcesser != null)
+                messageProcesser(message);
         }
     }
 }

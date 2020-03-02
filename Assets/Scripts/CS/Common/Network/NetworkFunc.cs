@@ -5,5 +5,5 @@ namespace Networks
     public delegate void NetworkStateChange(NetWorkState state);
 
     [CSharpCallLua]
-    public delegate void LuaHandlerAction(string a, string b);
+    public delegate void LuaHandlerAction(SocketModel socket);
 }

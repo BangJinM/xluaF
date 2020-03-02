@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7054919071983329393}
   - component: {fileID: 147471273384795027}
-  - component: {fileID: 523609746848227186}
+  - component: {fileID: 2945134063438271125}
   m_Layer: 5
   m_Name: TopLayer
   m_TagString: Untagged
@@ -58,7 +58,7 @@ Canvas:
   m_SortingLayerID: 1249575453
   m_SortingOrder: 80
   m_TargetDisplay: 0
---- !u!114 &523609746848227186
+--- !u!114 &2945134063438271125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1098665545247599255}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3577475694593651087}
   - component: {fileID: 1692903965144089577}
-  - component: {fileID: 5196223916519275582}
+  - component: {fileID: 4352222167581127943}
   m_Layer: 5
   m_Name: NormalLayer
   m_TagString: Untagged
@@ -133,7 +133,7 @@ Canvas:
   m_SortingLayerID: 1842177853
   m_SortingOrder: 50
   m_TargetDisplay: 0
---- !u!114 &5196223916519275582
+--- !u!114 &4352222167581127943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1136907019389433148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -160,7 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650922441650594077}
   - component: {fileID: 5722407658323751794}
-  - component: {fileID: 5009099520415832472}
+  - component: {fileID: 3317146853639432185}
   m_Layer: 5
   m_Name: Default
   m_TagString: Untagged
@@ -208,7 +208,7 @@ Canvas:
   m_SortingLayerID: -906664941
   m_SortingOrder: 10
   m_TargetDisplay: 0
---- !u!114 &5009099520415832472
+--- !u!114 &3317146853639432185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1444152462483705595}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5829934765085631981}
   - component: {fileID: 8656397961209470023}
-  - component: {fileID: 3792989818468021907}
+  - component: {fileID: 809219224488272661}
   m_Layer: 5
   m_Name: Main
   m_TagString: Untagged
@@ -283,7 +283,7 @@ Canvas:
   m_SortingLayerID: 1124340023
   m_SortingOrder: 20
   m_TargetDisplay: 0
---- !u!114 &3792989818468021907
+--- !u!114 &809219224488272661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1906812436927649854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -310,7 +310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5995653993568255475}
   - component: {fileID: 6373273733227765590}
-  - component: {fileID: 8995551676894927541}
+  - component: {fileID: 760116301521264944}
   m_Layer: 5
   m_Name: BackgroudLayer
   m_TagString: Untagged
@@ -358,7 +358,7 @@ Canvas:
   m_SortingLayerID: 1595797715
   m_SortingOrder: 40
   m_TargetDisplay: 0
---- !u!114 &8995551676894927541
+--- !u!114 &760116301521264944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3752571972034742238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -417,8 +417,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6827040220031667419}
   - component: {fileID: 6827040220031667418}
-  - component: {fileID: 6827040220031667417}
-  - component: {fileID: 6827040220031667416}
+  - component: {fileID: 4612225910016322660}
+  - component: {fileID: 2861280245348794554}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -474,7 +474,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &6827040220031667417
+--- !u!114 &4612225910016322660
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6827040220031667423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
@@ -496,7 +496,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &6827040220031667416
+--- !u!114 &2861280245348794554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -505,7 +505,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6827040220031667423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -561,10 +561,9 @@ Camera:
   m_ClearFlags: 3
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -602,7 +601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6800353284387007087}
   - component: {fileID: 5275640567437216707}
-  - component: {fileID: 8674339981233347805}
+  - component: {fileID: 523530711806169418}
   m_Layer: 5
   m_Name: TipLayer
   m_TagString: Untagged
@@ -650,7 +649,7 @@ Canvas:
   m_SortingLayerID: 1020562823
   m_SortingOrder: 70
   m_TargetDisplay: 0
---- !u!114 &8674339981233347805
+--- !u!114 &523530711806169418
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -659,7 +658,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6970957780701669014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -677,7 +676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5763540201390485768}
   - component: {fileID: 986193510195853391}
-  - component: {fileID: 3505137482561416995}
+  - component: {fileID: 941740500284477898}
   m_Layer: 5
   m_Name: MainForSystem
   m_TagString: Untagged
@@ -725,7 +724,7 @@ Canvas:
   m_SortingLayerID: -906664941
   m_SortingOrder: 30
   m_TargetDisplay: 0
---- !u!114 &3505137482561416995
+--- !u!114 &941740500284477898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -734,7 +733,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7000732092511484278}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -752,7 +751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5045535856661191119}
   - component: {fileID: 2561122771979605536}
-  - component: {fileID: 4427040445220627276}
+  - component: {fileID: 8315938978892101645}
   m_Layer: 5
   m_Name: InfoLayer
   m_TagString: Untagged
@@ -800,7 +799,7 @@ Canvas:
   m_SortingLayerID: -1724268131
   m_SortingOrder: 60
   m_TargetDisplay: 0
---- !u!114 &4427040445220627276
+--- !u!114 &8315938978892101645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -809,7 +808,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8428558859319274618}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1

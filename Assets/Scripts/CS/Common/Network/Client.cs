@@ -75,7 +75,9 @@ namespace Networks
                 try
                 {
                     this.socket.EndConnect(result);
-                    transport = new Transport(this.socket, processMessage);
+                    transport = new Transport(this.socket, ExcuteLuaHandler, Dispose);
+                    transport.receive();
+                    NetWorkChanged(NetWorkState.CONNECTING);
                 }
                 catch (SocketException e)
                 {
@@ -122,13 +124,42 @@ namespace Networks
             }
         }
 
-        internal void processMessage(byte[] bytes)
-        {
-        
-        }
-
+        /// <summary>
+        /// 注册客户端状态改变事件
+        /// </summary>
+        /// <param name="networkStateChange"></param>
         public void setNeworkChangedEventListener(NetworkStateChange networkStateChange) {
             networkStateChangeEvent = networkStateChange;
+        }
+
+        /// <summary>
+        /// 收到消息回调
+        /// </summary>
+        /// <param name="message"></param>
+        internal void ExcuteLuaHandler(SocketModel message)
+        {
+            Handlers handlers = Handlers.GetHandlers();
+            handlers.ExcuteLuaHandler( message);
+        }
+
+        /// <summary>
+        /// 注册lua时间
+        /// </summary>
+        /// <param name="messageType"></param>
+        /// <param name="action"></param>
+        public void RegisterLuaHandler(int messageType, LuaHandlerAction action)
+        {
+            Handlers handlers = Handlers.GetHandlers();
+            handlers.RegisterLuaHandler(messageType, action);
+        }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        public void SendMsg(int type, int area, int command, string message)
+        {
+            SocketModel sm = new SocketModel(type, area, command, message);
+            this.transport.send(sm);
         }
     }
 }

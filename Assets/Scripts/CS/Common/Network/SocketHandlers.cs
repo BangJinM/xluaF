@@ -31,10 +31,10 @@ namespace Networks {
             handles.Add(messageType, action);
         }
 
-        public void ExcuteLuaHandler(int messageType, string str)
+        public void ExcuteLuaHandler(SocketModel str)
         {
-            LuaHandlerAction action = handles[messageType];
-            action("1", str);
+            LuaHandlerAction action = handles[str.GetType()];
+            action(str);
         }
     }
 }
