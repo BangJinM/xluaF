@@ -1,8 +1,0 @@
-.vs/*
-bin/*
-Library/*
-Logs/*
-obj/*
-Packages/*
-*.csproj
-*sln

@@ -1,0 +1,17 @@
+require("framework.System")
+local LoginViewModel = require("Views.login.LoginViewModel")
+
+local M = class("LoginWindow", target)
+
+function M:onCreate(bundle)
+	self:BindingContext().DataContext = LoginViewModel()
+
+    local bindingSet = self:CreateBindingSet()
+    bindingSet:Bind(self.account):For("text", "onEndEdit"):To("account"):TwoWay()
+    bindingSet:Bind(self.password):For("text", "onEndEdit"):To("password"):TwoWay()
+    bindingSet:Bind(self.login):For ("onClick"):To ("login")
+	bindingSet:Bind(self.cancel):For ("onClick"):To ("cancel")
+    bindingSet:Build()
+end
+
+return M
