@@ -1,0 +1,18 @@
+require("framework.System")
+local MessageBoxModel = require("Views.Common.MessageBoxModel")
+
+local M = class("MessageBoxView", target)
+
+function M:onCreate(bundle)
+    self:BindingContext().DataContext = MessageBoxModel()
+
+    local bindingSet = self:CreateBindingSet()
+    bindingSet:Bind(self.title):For("text"):To("title"):TwoWay()
+    bindingSet:Bind(self.content):For("text"):To("content"):TwoWay()
+    bindingSet:Bind(self.ok):For("onClick"):To("okFunc")
+    bindingSet:Bind(self.no):For("onClick"):To("noFunc")
+
+    bindingSet:Build()
+end
+
+return M

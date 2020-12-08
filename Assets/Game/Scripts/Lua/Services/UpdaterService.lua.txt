@@ -1,0 +1,18 @@
+require("framework.System")
+
+local ObservableObject = require("framework.ObservableObject")
+
+
+---
+-- 热更服务
+--@module UpdaterService
+local M=class("UpdaterService", ObservableObject)
+
+function M:ctor(t)
+    M.super.ctor(self, t)
+end
+
+
+
+
+return M

@@ -62,7 +62,7 @@ public class MessageBox : IEnumerator
     private Text _textOk;
     private Text _textNo;
 
-    private static readonly GameObject _prefab = Resources.Load<GameObject>("MessageBox");
+    private static readonly GameObject _prefab = Resources.Load<GameObject>("Perfabs/MessageBox");
     private static readonly List<MessageBox> _showed = new List<MessageBox>();
     private static readonly List<MessageBox> _hidden = new List<MessageBox>();
 
