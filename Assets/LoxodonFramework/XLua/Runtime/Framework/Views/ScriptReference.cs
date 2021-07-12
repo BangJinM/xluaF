@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-using UnityEditor;
 using UnityEngine;
 
 namespace Loxodon.Framework.Views
@@ -62,25 +61,6 @@ namespace Loxodon.Framework.Views
         public virtual string Filename
         {
             get { return this.filename; }
-        }
-
-        public string LuaChunkName
-        {
-            get
-            {
-                if (text != null)
-                {
-#if UNITY_EDITOR
-                    return AssetDatabase.GetAssetPath(text);
-#else
-                    return text.name;
-#endif
-                }
-                else
-                {
-                    return "";
-                }
-            }
         }
 
         public void OnAfterDeserialize()

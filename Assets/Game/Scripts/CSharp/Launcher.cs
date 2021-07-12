@@ -36,9 +36,15 @@ using Loxodon.Framework.Binding;
 using Loxodon.Framework.Localizations;
 using Loxodon.Framework.Services;
 using Loxodon.Framework.XLua.Loaders;
-using Loxodon.Framework.Security.Cryptography;
+using Loxodon.Framework;
 
-namespace Loxodon.Framework.Examples
+using Network;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace Games
 {
     public class Launcher : MonoBehaviour
     {
@@ -55,8 +61,16 @@ namespace Loxodon.Framework.Examples
         private Action<MonoBehaviour> onDestroy;
 
         private ApplicationContext context;
+
+        INetworkManager networkMsgManager;
+        IConnection client;
+
         void Awake()
         {
+            networkMsgManager = new NetworkMsgManager(30);
+            client = new TCPClient(networkMsgManager);
+            client.Connect("127.0.0.1", 23456);
+
             GlobalWindowManager windowManager = FindObjectOfType<GlobalWindowManager>();
             if (windowManager == null)
                 throw new NotFoundException("Not found the GlobalWindowManager.");
@@ -70,7 +84,7 @@ namespace Loxodon.Framework.Examples
             bundle.Start();
 
             /* Initialize the ui view locator and register UIViewLocator */
-            container.Register<IUIViewLocator>(new DefaultUIViewLocator());
+            container.Register<IUIViewLocator>(new ResourcesViewLocator());
 
             /* Initialize the localization service */
             //CultureInfo cultureInfo = Locale.GetCultureInfoByLanguage (SystemLanguage.English);
@@ -102,8 +116,6 @@ namespace Loxodon.Framework.Examples
             luaEnv.AddLoader(new FileLoader(Application.persistentDataPath + "/Game/Res/", ".bytes"));
 #endif
 
-
-
             InitLuaEnv();
 
             if (onAwake != null)
@@ -111,8 +123,19 @@ namespace Loxodon.Framework.Examples
 
         }
 
+        void InitGlobal()
+        {
+            var luaEnv = LuaEnvironment.LuaEnv;
+            LuaTable global = luaEnv.NewTable();
+            luaEnv.Global.Set("global", global);
+
+            var spriteLoader = ScriptableObject.CreateInstance<AsyncSpriteLoader>();
+            global.Set("SpriteLoader", spriteLoader);
+        }
+
         void InitLuaEnv()
         {
+            InitGlobal();
             var luaEnv = LuaEnvironment.LuaEnv;
             scriptEnv = luaEnv.NewTable();
 
@@ -123,8 +146,14 @@ namespace Loxodon.Framework.Examples
 
             scriptEnv.Set("target", this);
 
-            string scriptText = (script.Type == ScriptReferenceType.TextAsset) ? script.Text.text : string.Format("require(\"framework.System\");local cls = require(\"{0}\");return extends(target,cls);", script.Filename);
-            object[] result = luaEnv.DoString(scriptText, script.LuaChunkName, scriptEnv);
+            string scriptText = (script.Type == ScriptReferenceType.TextAsset) ? script.Text.text : string.Format("require(\"framework.System\"); local cls = require(\"{0}\");return extends(target,cls);", script.Filename);
+            string textName = "";
+#if UNITY_EDITOR
+            textName = AssetDatabase.GetAssetPath(script.Text);
+#else
+            textName = script.Text.name;
+#endif
+            object[] result = luaEnv.DoString(scriptText, textName, scriptEnv);
 
             if (result.Length != 1 || !(result[0] is LuaTable))
                 throw new Exception();
@@ -142,6 +171,12 @@ namespace Loxodon.Framework.Examples
         {
             if (onEnable != null)
                 onEnable(this);
+        }
+
+        void Update()
+        {
+            networkMsgManager.Update();
+            client.Send(new Message());
         }
 
         void OnDisable()
@@ -178,6 +213,8 @@ namespace Loxodon.Framework.Examples
                 scriptEnv.Dispose();
                 scriptEnv = null;
             }
+            client.Close();
+
         }
     }
 }

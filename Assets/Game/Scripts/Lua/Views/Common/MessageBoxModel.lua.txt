@@ -13,6 +13,11 @@ local AsyncTask = require("framework.AsyncTask")
 --模块
 --@module MessageBoxModel.lua
 local M = class("MessageBoxModel", ObservableObject)
+-- 按钮类型 btnType=1:"确定" =2:{"确定","取消"}
+M.BTNTYPE = {
+    TYPE_ONE_BTN = 1,
+    TYPE_TWO_BTN = 2
+}
 
 --[[--
 构造函数
@@ -22,18 +27,17 @@ local M = class("MessageBoxModel", ObservableObject)
 function M:ctor(t)
     M.super.ctor(self, t)
 
-    self.title = ""
-    self.content = ""
+    self.title = self.title or ""
+    self.content = self.content or ""
+    self.btnType = M.BTNTYPE.TYPE_TWO_BTN or self.btnType
+    self.okCallBack = self.okCallBack or nil
+    self.noCallBack = self.noCallBack or nil
 
-    self.okCallBack = nil
-    self.noCallBack = nil
+    self.dismissRequest = InteractionRequest(self)
 
     self.okFunc =
         SimpleCommand(
         function()
-            self.okCallBack = function()
-                print("ok")
-            end
             if self.okCallBack then
                 self.okCallBack()
             end
@@ -43,9 +47,7 @@ function M:ctor(t)
     self.noFunc =
         SimpleCommand(
         function()
-            self.noCallBack = function()
-                print("no")
-            end
+            self.dismissRequest:Raise(nil)
             if self.noCallBack then
                 self.noCallBack()
             end

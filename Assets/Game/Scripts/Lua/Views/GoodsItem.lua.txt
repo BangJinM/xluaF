@@ -1,0 +1,24 @@
+require("framework.System")
+
+local Context = CS.Loxodon.Framework.Contexts.Context
+local M = class("GoodsItem", target)
+local GoodsItemModel = require("Views.GoodsItemModel")
+
+function M:enable(bundle)
+    self:BindingContext().DataContext =
+        GoodsItemModel(
+        {
+            iconName = "44",
+            num = 300,
+            image = self.icon
+        }
+    )
+
+    local bindingSet = self:CreateBindingSet()
+    bindingSet:Bind(self.num):For("text"):To("num"):TwoWay()
+    bindingSet:Bind(self.goodsItem):For("onClick"):To("onClick")
+    print("GoodsItem...")
+    bindingSet:Build()
+end
+
+return M

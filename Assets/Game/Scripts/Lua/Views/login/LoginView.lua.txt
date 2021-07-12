@@ -1,17 +1,28 @@
 require("framework.System")
-local LoginViewModel = require("Views.login.LoginViewModel")
 
+local LoginViewModel = require("Views.login.LoginViewModel")
+local MessageBoxModel = require("Views.Common.MessageBoxModel")
+local Context = CS.Loxodon.Framework.Contexts.Context
 local M = class("LoginWindow", target)
 
 function M:onCreate(bundle)
-	self:BindingContext().DataContext = LoginViewModel()
+    self:BindingContext().DataContext = LoginViewModel()
+
+    print("LoginView")
 
     local bindingSet = self:CreateBindingSet()
     bindingSet:Bind(self.account):For("text", "onEndEdit"):To("account"):TwoWay()
     bindingSet:Bind(self.password):For("text", "onEndEdit"):To("password"):TwoWay()
-    bindingSet:Bind(self.login):For ("onClick"):To ("login")
-	bindingSet:Bind(self.cancel):For ("onClick"):To ("cancel")
+    bindingSet:Bind(self.login):For("onClick"):To("login")
+    bindingSet:Bind(self.cancel):For("onClick"):To("cancel")
+
+    bindingSet:Bind():For("onOpenMessageBox"):To("openMessageBox")
+
     bindingSet:Build()
+end
+
+function M:onOpenMessageBox(sender, args)
+    
 end
 
 return M

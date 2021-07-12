@@ -63,7 +63,7 @@ namespace Loxodon.Framework.Views
             scriptEnv.Set("target", this);
 
             string scriptText = (script.Type == ScriptReferenceType.TextAsset) ? script.Text.text : string.Format("require(\"framework.System\");local cls = require(\"{0}\");return extends(target,cls);", script.Filename);
-            object[] result = luaEnv.DoString(scriptText, script.LuaChunkName, scriptEnv);
+            object[] result = luaEnv.DoString(scriptText, string.Format("{0}({1})", "LuaView", this.name), scriptEnv);
 
             if (result.Length != 1 || !(result[0] is LuaTable))
                 throw new Exception("");
