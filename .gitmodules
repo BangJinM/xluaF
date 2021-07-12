@@ -1,0 +1,4 @@
+[submodule "Assets/Modules/UnitySupport"]
+	path = Assets/Modules/UnitySupport
+	url = https://github.com/BangJinM/UnitySupport.git
+	branch = main
