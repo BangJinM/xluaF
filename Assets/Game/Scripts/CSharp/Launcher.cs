@@ -62,14 +62,12 @@ namespace Games
 
         private ApplicationContext context;
 
-        INetworkManager networkMsgManager;
-        IConnection client;
+        NetService netService;
 
         void Awake()
         {
-            networkMsgManager = new NetworkMsgManager(30);
-            client = new TCPClient(networkMsgManager);
-            client.Connect("127.0.0.1", 23456);
+            netService = NetService.GetInstance();
+            netService.Start("127.0.0.1", 23456);
 
             GlobalWindowManager windowManager = FindObjectOfType<GlobalWindowManager>();
             if (windowManager == null)
@@ -175,8 +173,7 @@ namespace Games
 
         void Update()
         {
-            networkMsgManager.Update();
-            client.Send(new Message());
+            netService.Tick();
         }
 
         void OnDisable()
@@ -213,7 +210,7 @@ namespace Games
                 scriptEnv.Dispose();
                 scriptEnv = null;
             }
-            client.Close();
+            netService.Close();
 
         }
     }
