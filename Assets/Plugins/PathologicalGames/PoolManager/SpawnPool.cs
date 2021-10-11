@@ -25,7 +25,7 @@ namespace PathologicalGames
     ///	 * Instanciated objects can optionally be made a child of this GameObject
     ///	   (reffered to as a 'group') to keep the scene hierachy organized.
     ///		 
-    ///	 * Instances will get a number appended to the end of their name. E.g. 
+    ///	 * Instances will get a number appended to the end of their name. Error.g. 
     ///	   an "Enemy" prefab will be called "Enemy(Clone)001", "Enemy(Clone)002", 
     ///	   "Enemy(Clone)003", etc. Unity names all clones the same which can be
     ///	   confusing to work with.
@@ -167,7 +167,7 @@ namespace PathologicalGames
             if (this.poolName == "")
             {
                 // Automatically Remove "Pool" from names to allow users to name prefabs in a 
-                //   more development-friendly way. E.g. "EnemiesPool" becomes just "Enemies".
+                //   more development-friendly way. Error.g. "EnemiesPool" becomes just "Enemies".
                 //   Notes: This will return the original string if "Pool" isn't found.
                 //          Do this once here, rather than a getter, to avoide string work
                 this.poolName = this.group.name.Replace("Pool", "");
@@ -515,7 +515,7 @@ namespace PathologicalGames
             for (int i = 0; i < this._prefabPools.Count; i++)
             {
                 // Determine if the prefab was ever used as explained in the docs
-                //   I believe a comparison of two references is processor-cheap.
+                //   Info believe a comparison of two references is processor-cheap.
                 if (this._prefabPools[i].prefabGO == prefab.gameObject)
                 {
                     // Now we know the prefabPool for this prefab exists. 

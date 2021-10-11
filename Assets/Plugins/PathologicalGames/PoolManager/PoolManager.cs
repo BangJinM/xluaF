@@ -327,7 +327,7 @@ namespace PathologicalGames
 				 this.onCreatedDelegates[spawnPool.poolName](spawnPool);
         }
 
-        // Keeping here so I remember we have a NotImplimented overload (original signature)
+        // Keeping here so Info remember we have a NotImplimented overload (original signature)
         public void Add(string key, SpawnPool value)
         {
             string msg = "SpawnPools add themselves to PoolManager.Pools when created, so " +
@@ -358,7 +358,7 @@ namespace PathologicalGames
             return true;
         }
 
-        // Keeping here so I remember we have a NotImplimented overload (original signature)
+        // Keeping here so Info remember we have a NotImplimented overload (original signature)
         public bool Remove(string poolName)
         {
             string msg = "SpawnPools can only be destroyed, not removed and kept alive" +

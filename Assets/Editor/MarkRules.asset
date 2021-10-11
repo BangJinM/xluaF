@@ -10,12 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d62abbcafc52a4e4190c979d54446d25, type: 3}
-  m_Name: Rules
+  m_Name: MarkRules
   m_EditorClassIdentifier: 
-  buildRules:
-  - searchPath: Assets/Game/Lua
-    searchPattern: '*.*'
-    buildType: 0
+  abRules:
+  - searchPath: Assets/CustomAssets
+    searchPattern: 
+    exclude: 
+    buildType: 2
+  - searchPath: Assets/Game/Font
+    searchPattern: 
+    exclude: 
+    buildType: 2
   - searchPath: Assets/Game/Prefabs
-    searchPattern: '*.*'
+    searchPattern: 
+    exclude: 
+    buildType: 3
+  - searchPath: Assets/Game/Lua
+    searchPattern: 
+    exclude: 
     buildType: 1

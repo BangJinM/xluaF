@@ -61,7 +61,8 @@ namespace Games
 
         void Awake()
         {
-            var mainManager = MainManager.Instance;
+            AssetBundleDependenceManager assetBundleManager = AssetBundleDependenceManager.Instance;
+
             GlobalWindowManager windowManager = FindObjectOfType<GlobalWindowManager>();
             if (windowManager == null)
                 throw new NotFoundException("Not found the GlobalWindowManager.");
