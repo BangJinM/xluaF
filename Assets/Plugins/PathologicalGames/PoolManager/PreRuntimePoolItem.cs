@@ -1,8 +1,8 @@
 /// <Licensing>
-/// © 2011 (Copyright) Path-o-logical Games, LLC
+/// ?2011 (Copyright) Path-o-logical Games, LLC
 /// Licensed under the Unity Asset Package Product License (the "License");
 /// You may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at: http://licensing.path-o-logical.com
+/// You may obtain a copy of the License at: http://licensing.assetName-o-logical.com
 /// </Licensing>
 using UnityEngine;
 using System.Collections;
@@ -14,7 +14,7 @@ namespace PathologicalGames
     /// <description>
     /// Adds an instance which is already a part of a scene to a pool on game start
     /// 
-    /// Online Docs: http://docs.poolmanager.path-o-logical.com
+    /// Online Docs: http://docs.poolmanager.assetName-o-logical.com
     /// </description>
     [AddComponentMenu("Path-o-logical/PoolManager/Pre-Runtime Pool Item")]
     public class PreRuntimePoolItem : MonoBehaviour
@@ -64,7 +64,7 @@ namespace PathologicalGames
                         "No pool with the name '{1}' exists! Create one using the " +
                         "PoolManager Inspector interface or PoolManager.CreatePool()." +
                         "See the online docs for more information at " +
-                        "http://docs.poolmanager.path-o-logical.com";
+                        "http://docs.poolmanager.assetName-o-logical.com";
 
                 Debug.LogError(string.Format(msg, this.name, this.poolName));
                 return;

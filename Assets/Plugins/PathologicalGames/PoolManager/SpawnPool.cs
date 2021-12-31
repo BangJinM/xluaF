@@ -2,7 +2,7 @@
 /// � 2011 (Copyright) Path-o-logical Games, LLC
 /// Licensed under the Unity Asset Package Product License (the "License");
 /// You may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at: http://licensing.path-o-logical.com
+/// You may obtain a copy of the License at: http://licensing.assetName-o-logical.com
 /// </Licensing>
 using UnityEngine;
 using System.Collections;
@@ -14,7 +14,7 @@ namespace PathologicalGames
     
     /// <description>
     /// Online Docs: 
-    ///     http://docs.poolmanager2.path-o-logical.com/code-reference/spawnpool
+    ///     http://docs.poolmanager2.assetName-o-logical.com/code-reference/spawnpool
     ///     
     ///	A special List class that manages object pools and keeps the scene 
     ///	organized.

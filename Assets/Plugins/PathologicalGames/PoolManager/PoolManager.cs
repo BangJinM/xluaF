@@ -2,7 +2,7 @@
 /// ?2011 (Copyright) Path-o-logical Games, LLC
 /// Licensed under the Unity Asset Package Product License (the "License");
 /// You may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at: http://licensing.path-o-logical.com
+/// You may obtain a copy of the License at: http://licensing.assetName-o-logical.com
 /// </Licensing>
 using UnityEngine;
 using System.Collections;
@@ -20,7 +20,7 @@ namespace PathologicalGames
     ///        * Member access protection so you can't run anything you aren't supposed to.
     ///  - Moved all functions for working with Pools from PoolManager to PoolManager.Pools
     ///    which enabled shorter names to reduces the length of lines of code.
-    /// Online Docs: http://docs.poolmanager2.path-o-logical.com
+    /// Online Docs: http://docs.poolmanager2.assetName-o-logical.com
     /// </description>
     public static class PoolManager
     {

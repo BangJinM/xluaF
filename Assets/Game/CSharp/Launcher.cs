@@ -28,15 +28,6 @@ using UnityEngine;
 using System.Globalization;
 using XLua;
 
-using Loxodon.Framework.Contexts;
-using Loxodon.Framework.Views;
-using Loxodon.Framework.Binding;
-using Loxodon.Framework.Localizations;
-using Loxodon.Framework.Services;
-using Loxodon.Framework.XLua.Loaders;
-using Loxodon.Framework;
-using US;
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -45,10 +36,6 @@ namespace Games
 {
     public class Launcher : MonoBehaviour
     {
-        //private static readonly ILog log = LogManager.GetLogger(typeof(Launcher));
-
-        public ScriptReference script;
-
         private LuaTable scriptEnv;
         private LuaTable metatable;
         private Action<MonoBehaviour> onAwake;
@@ -57,57 +44,8 @@ namespace Games
         private Action<MonoBehaviour> onStart;
         private Action<MonoBehaviour> onDestroy;
 
-        private ApplicationContext context;
-
         void Awake()
         {
-            AssetBundleDependenceManager assetBundleManager = AssetBundleDependenceManager.Instance;
-
-            GlobalWindowManager windowManager = FindObjectOfType<GlobalWindowManager>();
-            if (windowManager == null)
-                throw new NotFoundException("Not found the GlobalWindowManager.");
-
-            context = Context.GetApplicationContext();
-
-            IServiceContainer container = context.GetContainer();
-
-            /* Initialize the data binding service */
-            LuaBindingServiceBundle bundle = new LuaBindingServiceBundle(context.GetContainer());
-            bundle.Start();
-
-            /* Initialize the ui view locator and register UIViewLocator */
-            container.Register<IUIViewLocator>(new ResourcesViewLocator());
-
-            /* Initialize the localization service */
-            //CultureInfo cultureInfo = Locale.GetCultureInfoByLanguage (SystemLanguage.English);
-            CultureInfo cultureInfo = Locale.GetCultureInfo();
-            var localization = Localization.Current;
-            localization.CultureInfo = cultureInfo;
-            localization.AddDataProvider(new DefaultDataProvider("LuaLocalizations", new XmlDocumentParser()));
-
-            /* register Localization */
-            container.Register<Localization>(Localization.Current);
-
-            var luaEnv = LuaEnvironment.LuaEnv;
-#if UNITY_EDITOR
-            foreach (string dir in Directory.GetDirectories(Application.dataPath, "Game/Lua", SearchOption.AllDirectories))
-            {
-                luaEnv.AddLoader(new FileLoader(dir, ".lua"));
-                luaEnv.AddLoader(new FileLoader(dir, ".lua.txt"));
-            }
-#else
-            /* Pre-compiled and encrypted */
-            //var decryptor = new RijndaelCryptograph(128,Encoding.ASCII.GetBytes("E4YZgiGQ0aqe5LEJ"), Encoding.ASCII.GetBytes("5Hh2390dQlVh0AqC"));
-            //luaEnv.AddLoader( new DecodableLoader(new FileLoader(Application.streamingAssetsPath + "/LuaScripts/", ".bytes"), decryptor));
-            //luaEnv.AddLoader( new DecodableLoader(new FileLoader(Application.persistentDataPath + "/LuaScripts/", ".bytes"), decryptor));
-
-            /* Lua source code */
-            luaEnv.AddLoader(new FileLoader(Application.streamingAssetsPath + "/Game/Scripts/Lua/", ".bytes"));
-            luaEnv.AddLoader(new FileLoader(Application.persistentDataPath + "/Game/Scripts/Lua/", ".bytes"));
-            luaEnv.AddLoader(new FileLoader(Application.streamingAssetsPath + "/Game/Res/", ".bytes"));
-            luaEnv.AddLoader(new FileLoader(Application.persistentDataPath + "/Game/Res/", ".bytes"));
-#endif
-
             InitLuaEnv();
 
             if (onAwake != null)
@@ -115,48 +53,21 @@ namespace Games
 
         }
 
-        void InitGlobal()
-        {
-            var luaEnv = LuaEnvironment.LuaEnv;
-            LuaTable global = luaEnv.NewTable();
-            luaEnv.Global.Set("global", global);
-
-            var spriteLoader = ScriptableObject.CreateInstance<AsyncSpriteLoader>();
-            global.Set("SpriteLoader", spriteLoader);
-        }
-
         void InitLuaEnv()
         {
-            InitGlobal();
             var luaEnv = LuaEnvironment.LuaEnv;
-            scriptEnv = luaEnv.NewTable();
+            LuaEnvironment.InitLuaEnv(luaEnv);
+            luaEnv.DoString("require(\"main.lua\")");
+            //if (result.Length != 1 )
+            //    throw new Exception();
 
-            LuaTable meta = luaEnv.NewTable();
-            meta.Set("__index", luaEnv.Global);
-            scriptEnv.SetMetaTable(meta);
-            meta.Dispose();
+            //metatable = (LuaTable)result[0];
 
-            scriptEnv.Set("target", this);
-
-            string scriptText = (script.Type == ScriptReferenceType.TextAsset) ? script.Text.text : string.Format("require(\"framework.System\"); local cls = require(\"{0}\");return extends(target,cls);", script.Filename);
-            string textName = "";
-#if UNITY_EDITOR
-            textName = AssetDatabase.GetAssetPath(script.Text);
-#else
-            textName = script.Text.name;
-#endif
-            object[] result = luaEnv.DoString(scriptText, textName, scriptEnv);
-
-            if (result.Length != 1 || !(result[0] is LuaTable))
-                throw new Exception();
-
-            metatable = (LuaTable)result[0];
-
-            onAwake = metatable.Get<Action<MonoBehaviour>>("awake");
-            onEnable = metatable.Get<Action<MonoBehaviour>>("enable");
-            onDisable = metatable.Get<Action<MonoBehaviour>>("disable");
-            onStart = metatable.Get<Action<MonoBehaviour>>("start");
-            onDestroy = metatable.Get<Action<MonoBehaviour>>("destroy");
+            //onAwake = metatable.Get<Action<MonoBehaviour>>("awake");
+            //onEnable = metatable.Get<Action<MonoBehaviour>>("enable");
+            //onDisable = metatable.Get<Action<MonoBehaviour>>("disable");
+            //onStart = metatable.Get<Action<MonoBehaviour>>("start");
+            //onDestroy = metatable.Get<Action<MonoBehaviour>>("destroy");
         }
 
         void OnEnable()
