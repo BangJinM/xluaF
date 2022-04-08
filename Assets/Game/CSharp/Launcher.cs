@@ -58,6 +58,17 @@ namespace Games
             var luaEnv = LuaEnvironment.LuaEnv;
             LuaEnvironment.InitLuaEnv(luaEnv);
             luaEnv.DoString("require(\"main.lua\")");
+
+            var loader = US.AssetBundleLoader.Load("assets/game/Res.ab", US.LoaderMode.Async, (bool isOk, object resultObject) => {
+                AssetBundle assetBundle = resultObject as AssetBundle;
+            });
+
+            var loader2 = US.ByteAssetLoader.Load("assets/game/res.ab", US.LoaderMode.Async, (bool isOk, object resultObject) => {
+                var tem21p = resultObject;
+            });
+
+            var temp = US.DispatchMessageController.Instance;
+
             //if (result.Length != 1 )
             //    throw new Exception();
 

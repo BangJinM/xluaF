@@ -58,20 +58,7 @@ namespace Games
 
         static void InitLoader(LuaEnv luaEnv)
         {
-#if UNITY_EDITOR
             luaEnv.AddLoader(CustomLoader);
-#else
-            /* Pre-compiled and encrypted */
-            //var decryptor = new RijndaelCryptograph(128,Encoding.ASCII.GetBytes("E4YZgiGQ0aqe5LEJ"), Encoding.ASCII.GetBytes("5Hh2390dQlVh0AqC"));
-            //luaEnv.AddLoader( new DecodableLoader(new FileLoader(Application.streamingAssetsPath + "/LuaScripts/", ".bytes"), decryptor));
-            //luaEnv.AddLoader( new DecodableLoader(new FileLoader(Application.persistentDataPath + "/LuaScripts/", ".bytes"), decryptor));
-
-            /* Lua source code */
-            luaEnv.AddLoader(new FileLoader(Application.streamingAssetsPath + "/Game/Scripts/Lua/", ".bytes"));
-            luaEnv.AddLoader(new FileLoader(Application.persistentDataPath + "/Game/Scripts/Lua/", ".bytes"));
-            luaEnv.AddLoader(new FileLoader(Application.streamingAssetsPath + "/Game/Res/", ".bytes"));
-            luaEnv.AddLoader(new FileLoader(Application.persistentDataPath + "/Game/Res/", ".bytes"));
-#endif
         }
 
         static byte[] CustomLoader(ref string filepath)
